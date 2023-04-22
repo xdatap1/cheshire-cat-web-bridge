@@ -1,60 +1,40 @@
-# Siri - Cheshire Cat integration
+# cheshire-cat-web-bridge
+### A Rest API bridge to Cheshire Cat Websocket PoC
 
-## Proof of Concept on interfacing Mac Shortcuts with Cheshire Cat
-
-Inspired by [Yue-Yang](https://github.com/Yue-Yang/ChatGPT-Siri)'s work with OpenAI's ChatGPT Siri interface, I tried to make [Cheshire Cat](https://github.com/pieroit/cheshire-cat) talk with Siri on MAC.
+This is a proof of concept of a REST API Bridge to the Cheshire Cat WebSocket. It is an evolution of the [Siri Cheshire Cat integration](https://github.com/xdatap1/siri-cheshire-cat) Proof of Concept.
 
 ### Requirements
-* MacOSX Ventura or later versions
-* [Homebrew](https://brew.sh)
-* [websocat](https://github.com/vi/websocat)
-* [Cheshire Cat](https://github.com/pieroit/cheshire-cat) installed locally, or at least on a reachable IP address.
-
-### Architecture
-The PoC is very simple. From Siri, it asks for a prompt from the user. Then it uses an [Apple Script](https://github.com/xdatap1/siri-cheshire-cat/blob/main/applescript.txt) to send the message to the Cheshire Cat and retrieve the response. After that, it extracts the response from the JSON with simple [JavaScript](https://github.com/xdatap1/siri-cheshire-cat/blob/main/javascript.txt) and returns it to the user. You can run this with a textual prompt or voice. 
+* Python
+	* Flask
+	* Flask-Cors
+	* websockets
 
 ### Installation
 
-To download the shortcut, click [here](https://www.icloud.com/shortcuts/277345a499994b51a1bf03ac08fadb27).
+To install Python requirements, run
 
-After installing it, you should see this:
+> pip install -r requirements.txt
 
-![](Siri-Cheshire-Cat.png)
+And then run the app.py
 
-If you see the following, you have the scripting actions disabled:
+> python3 app.py
 
-![](disabled-script-actions.png)
+It will start listening at port 3500. To test it, just run open test.html with your browser. It should work as the following. If not, try to make it work with the web first since the next step is harder to debug. If you need help with debugging, try the app-verbose.py, which shows on the terminal what is receiving from the user and the Cheshire Cat.
 
-Go to Preferences / Advanced and click the "Allow Running Scripts" option to enable it.
-
-![](script-enabling.png)
-
-Currently, Cheshire Cat exposes a [websocket](https://en.wikipedia.org/wiki/WebSocket) as the only way to talk with it. Unfortunately, Apple Shortcuts doesn't support WebSockets, so I solved this problem with [websocat](https://github.com/vi/websocat), a command line wrapper to WebSocket.
-
-To install [websocat](https://github.com/vi/websocat) on Mac OSX you can use [Homebrew](https://brew.sh) or [MacPorts](https://www.macports.org). I used [Homebrew](https://brew.sh). Once you have installed it, check the full command path to update the AppleScript eventually.
-
-Open a Terminal and type:
-
-> % which websocat
-> 
-> /opt/homebrew/bin/websocat
-> 
-
-If the path is different from the above, you need to update accordingly [Apple Script](https://github.com/xdatap1/siri-cheshire-cat/blob/main/applescript.txt) line 4. Also, if you have Cheshire Cat installed on a different machine than localhost, you need to update 3 as well.
-
-![](apple-script-changes.png)
-
-### Usage
-
-You can test the Siri-Cheshire-Cat shortcut with the play button on the top of the window, and it prompts textually:
-
-![](prompt1.png)
-
-And it will provide the answer based on the previous conversations:
-
-![](answer1.png)
-
-If you start Siri and ask "Run Cheshire Cat" it will interact the same way but with voice.
-
+![](webtest.png)
+ 
+ If it works as expected, you can try the next step: make it work with Siri!
+ 
+ Install the shortcut from [here](https://www.icloud.com/shortcuts/880466f7577e4bbf9325e2be38f3fb52). Open it; it should look like the following:
+ 
+ ![](Shortcut.png)
+ 
+ Edit the text to insert your IP address (mine is 192.168.1.4) and test it.
+ 
+ As the [previous version](https://github.com/xdatap1/siri-cheshire-cat) works in both text and voice.
+ 
+ Now you can activate wifi on your iPhone or iPad and try it also from your iOS devices.
+ 
+ 
 ### Final Notes
-This is just a Prof of Concept to evaluate Cheshire Cat interfacing from other applications, have fun, and learn new stuff. Since it uses AppleScript works only on Mac and cannot be run on iPhone or iPad. It could be implemented in different, more elegant ways. Feel free to fork and adapt it as you prefer. It's not going to be maintained in any way.
+This is just a Prof of Concept to evaluate Cheshire Cat interfacing from other applications, have fun, and learn new stuff. To get a little help, I must confess that I used ChatGPT. So the code might be redundant and not very elegant. Feel free to fork and adapt it as you prefer. It's not going to be maintained in any way.
