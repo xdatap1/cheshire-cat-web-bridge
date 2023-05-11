@@ -1,4 +1,8 @@
 # cheshire-cat-web-bridge
+
+> **Warning** 
+> This project is OBSOLETE. Please find the new version on the project [cheshire-cat-adapters](https://github.com/xdatap1/cheshire-cat-adapters/) 
+
 ### A Rest API bridge to Cheshire Cat Websocket PoC
 
 This is a proof of concept of a REST API Bridge to the Cheshire Cat WebSocket. It is an evolution of the [Siri Cheshire Cat integration](https://github.com/xdatap1/siri-cheshire-cat) Proof of Concept.
